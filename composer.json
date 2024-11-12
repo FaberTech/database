@@ -18,7 +18,7 @@
   "php": ">=8.2",
   "illuminate/database": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
   "ramsey/uuid": "^4.0",
-  "doctrine/dbal": "^4.0"  // Upgrade to 4.0
+  "doctrine/dbal": "^4.0"  
 },
   "require-dev": {
     "phpunit/phpunit": "4.5",
