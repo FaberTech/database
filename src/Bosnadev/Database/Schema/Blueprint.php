@@ -30,7 +30,7 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
      *
      * @return void
      */
-    protected function addFluentIndexes()
+    protected function addFluentIndexes(Connection $connection, Grammar $grammar): void
     {
         foreach ($this->columns as $column) {
             foreach (array('primary', 'unique', 'index', 'gin', 'gist') as $index) {
