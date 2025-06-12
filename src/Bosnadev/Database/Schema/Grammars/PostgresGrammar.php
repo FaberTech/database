@@ -290,15 +290,25 @@ class PostgresGrammar extends \Illuminate\Database\Schema\Grammars\PostgresGramm
     }
 
     /**
-     * Check if string matches on of uuid_generate functions
-     *
-     * @param $value
-     * @return int
-     */
-    protected function isUuid($value)
-    {
-        return preg_match('/^uuid_generate_v/', $value);
-    }
+      * Check if value is a uuid_generate function call
+      *
+      * @param mixed $value
+      * @return bool
+      */
+     protected function isUuid($value): bool
+     {
+         // If it’s a raw expression, skip regex
+         if ($value instanceof Expression) {
+             return false;
+         }
+     
+         // Only run preg_match on actual strings
+         if (! is_string($value)) {
+             $value = (string) $value;
+         }
+     
+         return (bool) preg_match('/^uuid_generate_v/', $value);
+     }
 
     /**
      * Compile a gin index key command.
