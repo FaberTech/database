@@ -284,7 +284,14 @@ class PostgresGrammar extends \Illuminate\Database\Schema\Grammars\PostgresGramm
      */
     protected function getDefaultValue($value)
     {
-        if($this->isUuid($value)) return strval($value);
+        // Raw SQL (Expression)?  Let parent handle it
+        if ($value instanceof Expression) {
+            return parent::getDefaultValue($value);
+        }
+
+        if ($this->isUuid($value)) {
+            return (string) $value;
+        }
 
         return parent::getDefaultValue($value);
     }
@@ -303,11 +310,11 @@ class PostgresGrammar extends \Illuminate\Database\Schema\Grammars\PostgresGramm
          }
      
          // Only run preg_match on actual strings
-         if (! is_string($value)) {
-             $value = (string) $value;
+         if (! is_string($value) && is_object($value) && method_exists($value, '__toString')) {
+            $value = (string) $value;
          }
      
-         return (bool) preg_match('/^uuid_generate_v/', $value);
+         return is_string($value) && (bool) preg_match('/^uuid_generate_v/', $value);
      }
 
     /**
