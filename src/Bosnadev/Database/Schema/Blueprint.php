@@ -2,6 +2,9 @@
 
 namespace Bosnadev\Database\Schema;
 
+use Illuminate\Database\Connection;
+use Illuminate\Database\Schema\Grammars\Grammar;
+
 /**
  * Class Blueprint
  * @package Bosnadev\Database\Schema
